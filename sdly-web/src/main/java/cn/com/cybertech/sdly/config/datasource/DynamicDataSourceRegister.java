@@ -47,7 +47,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     static {
         ALIASES.addAliases("url", "jdbc-url");
         ALIASES.addAliases("username", "user");
-        ALIASES.addAliases("driverClassName","driver-class-name");
+        //ALIASES.addAliases("driverClassName","driver-class-name");
     }
 
     @Override
