@@ -1,10 +1,15 @@
 package cn.com.cybertech.sdly.config.mybatis;
 
 import cn.com.cybertech.sdly.common.mapper.CrudMapper;
+import lombok.Data;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 
 import java.util.Properties;
@@ -15,6 +20,7 @@ import java.util.Properties;
 @Configuration
 @AutoConfigureAfter(MybatisAutoConfiguration.class)
 public class MybatisConfig {
+
 
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
@@ -30,4 +36,10 @@ public class MybatisConfig {
         mapperScannerConfigurer.setProperties(properties);
         return mapperScannerConfigurer;
     }
+
+
+
+
+
+
 }

@@ -5,7 +5,6 @@ import cn.com.cybertech.sdly.model.po.PO;
 import cn.com.cybertech.sdly.model.qo.PageQo;
 import cn.com.cybertech.sdly.model.vo.PageVo;
 import cn.com.cybertech.sdly.service.CrudService;
-import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +49,8 @@ public abstract class BaseServiceImpl<E extends PO<PK>,PK> implements CrudServic
 
     @Override
     public E selectByPk(PK id) {
-        return null;
+        checkNotNull(id);
+        return crudMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -79,6 +79,12 @@ public abstract class BaseServiceImpl<E extends PO<PK>,PK> implements CrudServic
     }
 
 
+    /**
+     * 把迭代器里面的内容用 separator 分割成字符串
+     * @param pks
+     * @param separator
+     * @return
+     */
     private String iterableToSpitStr(Iterable<PK> pks, String separator) {
         StringBuilder s = new StringBuilder();
         pks.forEach(pk -> s.append(pk).append(separator));

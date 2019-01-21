@@ -37,7 +37,7 @@ public class LogAspect {
     public void logPointCut(){}
 
     @Autowired
-    private BaseServiceImpl requestLogMapper;
+    private RequestLogMapper requestLogMapper;
 
     @Around("logPointCut()")
     public Object post(ProceedingJoinPoint proceedingJoinPoint){
