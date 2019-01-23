@@ -1,6 +1,6 @@
 package cn.com.cybertech.sdly;
 
-import cn.com.cybertech.sdly.config.datasource.DynamicDataSourceRegister;
+import cn.com.cybertech.sdly.datasource.DynamicDataSourceRegister;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

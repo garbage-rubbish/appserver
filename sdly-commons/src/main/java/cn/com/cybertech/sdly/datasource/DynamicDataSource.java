@@ -1,4 +1,4 @@
-package cn.com.cybertech.sdly.config.datasource;
+package cn.com.cybertech.sdly.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

@@ -17,8 +17,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by huangkd on 2019/1/20.
  */
-@Service
-@Transactional
 public abstract class BaseServiceImpl<E extends PO<PK>,PK> implements CrudService<E,PK> {
 
     @Autowired

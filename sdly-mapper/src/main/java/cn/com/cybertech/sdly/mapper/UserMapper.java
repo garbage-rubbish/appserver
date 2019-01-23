@@ -9,4 +9,11 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
 
     User selectById(@Param("id") String id);
+
+    /**
+     *
+     * @param user
+     * @return 受影响的行数
+     */
+    int insert(User user);
 }

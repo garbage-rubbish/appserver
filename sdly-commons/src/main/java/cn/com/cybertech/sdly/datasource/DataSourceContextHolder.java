@@ -1,4 +1,4 @@
-package cn.com.cybertech.sdly.config.datasource;
+package cn.com.cybertech.sdly.datasource;
 
 import lombok.extern.slf4j.Slf4j;
 

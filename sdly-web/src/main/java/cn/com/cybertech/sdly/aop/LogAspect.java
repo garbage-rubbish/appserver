@@ -1,14 +1,13 @@
 package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.Log;
-import cn.com.cybertech.sdly.mapper.RequestLogMapper;
+import cn.com.cybertech.sdly.datasource.DataSourceContextHolder;
 import cn.com.cybertech.sdly.model.po.RequestLog;
-import cn.com.cybertech.sdly.service.impl.BaseServiceImpl;
+import cn.com.cybertech.sdly.service.RequestLogService;
 import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -37,11 +36,13 @@ public class LogAspect {
     public void logPointCut(){}
 
     @Autowired
-    private RequestLogMapper requestLogMapper;
+    private RequestLogService requestLogService;
 
     @Around("logPointCut()")
     public Object post(ProceedingJoinPoint proceedingJoinPoint){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //requestAttributes 在请求子线程中为空，可以开启子线程共享解决
+        //RequestContextHolder.setRequestAttributes(requestAttributes,true);
         HttpServletRequest request = requestAttributes.getRequest();
         String className = proceedingJoinPoint.getTarget().getClass().getName();
         String methodName=proceedingJoinPoint.getSignature().getName();
@@ -70,7 +71,7 @@ public class LogAspect {
             String desc=annotation.value();
             Date date=new Date();
             RequestLog requestLog=new RequestLog(date,date,className,methodName,ip,params,reqUrl,desc,resultStr,spendTime);
-            requestLogMapper.insert(requestLog);
+            requestLogService.insert(requestLog);
             return resultObj;
         } catch (Throwable throwable) {
             throw new RuntimeException(throwable);

@@ -4,4 +4,11 @@
     <select id="selectById" resultType="user" parameterType="String">
         select * from user where id=#{id}
     </select>
+    <insert id="insert" parameterType="user" >
+       <!-- <selectKey keyProperty="id" resultType="String">
+            select replace(uuid(),'-','')
+        </selectKey>-->
+        insert into user(id,nickname,gender,avatar,type,status,create_time,update_time)
+        values(#{id},#{nickname},#{gender},#{avatar},#{type},#{status},#{createTime},#{updateTime})
+    </insert>
 </mapper>

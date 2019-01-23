@@ -1,8 +1,7 @@
 package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.ChangeDataSource;
-import cn.com.cybertech.sdly.annotations.Log;
-import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
+import cn.com.cybertech.sdly.datasource.DataSourceContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,8 +9,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
 
 /**
  * Created by huangkd on 2019/1/21.

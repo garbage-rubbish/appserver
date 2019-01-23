@@ -29,8 +29,8 @@ public class User  {
 	private static final long serialVersionUID = -7491215402569546437L;
 
 	@ApiModelProperty(value = "用户主键")
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "SELECT REPLACE(UUID(),'-','')")
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "SELECT REPLACE(UUID(),'-','')")
 	private String id;
 
 	@ApiModelProperty(value = "昵称")
