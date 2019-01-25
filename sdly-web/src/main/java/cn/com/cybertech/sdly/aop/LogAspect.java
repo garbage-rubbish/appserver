@@ -1,7 +1,8 @@
 package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.Log;
-import cn.com.cybertech.sdly.datasource.DataSourceContextHolder;
+import cn.com.cybertech.sdly.enums.ResultCode;
+import cn.com.cybertech.sdly.exceptions.BusinessException;
 import cn.com.cybertech.sdly.model.po.RequestLog;
 import cn.com.cybertech.sdly.service.RequestLogService;
 import com.google.common.base.Stopwatch;
@@ -39,7 +40,7 @@ public class LogAspect {
     private RequestLogService requestLogService;
 
     @Around("logPointCut()")
-    public Object post(ProceedingJoinPoint proceedingJoinPoint){
+    public Object handleRequestLog(ProceedingJoinPoint proceedingJoinPoint){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         //requestAttributes 在请求子线程中为空，可以开启子线程共享解决
         //RequestContextHolder.setRequestAttributes(requestAttributes,true);
@@ -71,10 +72,11 @@ public class LogAspect {
             String desc=annotation.value();
             Date date=new Date();
             RequestLog requestLog=new RequestLog(date,date,className,methodName,ip,params,reqUrl,desc,resultStr,spendTime);
-            requestLogService.insert(requestLog);
+            // TODO requestLogService.insert(requestLog); 请求数据源和日志数据源不同报错
+            log.info("requestLog:{}",requestLog);
             return resultObj;
         } catch (Throwable throwable) {
-            throw new RuntimeException(throwable);
+            throw new BusinessException(ResultCode.SYSTEM_INNER_ERROR);
         }
     }
 

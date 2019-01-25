@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * Created by huangkd on 2019/1/23.
- * 业务异常 统一异常处理包装成ErrorResult返回
+ * 业务异常
  *
  */
 @Data
@@ -17,7 +17,6 @@ public class BusinessException extends RuntimeException {
     private Object data;
 
     public BusinessException(ResultCode resultCode,Object data) {
-
         this.resultCode=resultCode;
         this.data=data;
     }

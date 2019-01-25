@@ -1,7 +1,7 @@
 package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.ChangeDataSource;
-import cn.com.cybertech.sdly.datasource.DataSourceContextHolder;
+import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,11 +20,11 @@ import org.springframework.stereotype.Component;
 public class DataSourceAspect {
 
     @Pointcut("@annotation(cn.com.cybertech.sdly.annotations.ChangeDataSource)")
-    public void poincut(){}
+    public void pointCut(){}
 
 
 
-    @Around("poincut()")
+    @Around("pointCut()")
     public Object post(ProceedingJoinPoint point) throws Throwable {
         MethodSignature methodSignature= (MethodSignature) point.getSignature();
         ChangeDataSource annotation = methodSignature.getMethod().getAnnotation(ChangeDataSource.class);

@@ -7,14 +7,18 @@ import cn.com.cybertech.sdly.mapper.UserMapper;
 import cn.com.cybertech.sdly.model.po.RequestLog;
 import cn.com.cybertech.sdly.model.po.User;
 import cn.com.cybertech.sdly.model.qo.PageQo;
+import cn.com.cybertech.sdly.result.PlatformResult;
 import cn.com.cybertech.sdly.service.RequestLogService;
 import cn.com.cybertech.sdly.service.UserService;
 import cn.com.cybertech.sdly.service.impl.BaseServiceImpl;
 import cn.com.cybertech.sdly.service.impl.UserServiceImpl;
+import cn.com.cybertech.sdly.test.Demo;
+import cn.com.cybertech.sdly.test.Demo1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -24,7 +28,6 @@ import java.util.Date;
  */
 @ApiModel("测试")
 @RestController
-@RequestMapping("/test")
 public class TestController {
 
     @Autowired
@@ -41,19 +44,29 @@ public class TestController {
     @GetMapping("/test")
     @Log("测试")
     @ChangeDataSource("test2")
-    public RequestLog test(@RequestParam String param1, String params2, PageQo pageQo){
+    public PlatformResult test(@RequestParam String param1, String params2, PageQo pageQo){
         RequestLog requestLog=new RequestLog(new Date(),new Date(),"xxx","xxx","asd","asd","asd","asdas","aasd",111);
         requestLogMapper.insert(requestLog);
-        return requestLog;
+        return PlatformResult.success(requestLog);
     }
 
     @GetMapping("/test1")
     @ChangeDataSource("zhuma_user")
     @Log("tset")
-    public User test1(){
+    public String test1(){
       //  User user=userService.selectById("1");
         //return user;
-        return null;
+        return "sdfsdf";
+    }
+
+    @PostMapping("/test2")
+    public PlatformResult test2(@Validated @RequestBody Demo demo){
+        return PlatformResult.success(demo);
+    }
+
+    @GetMapping("test3")
+    public PlatformResult test3(@RequestParam String param,@RequestParam Demo1 haha){
+        return PlatformResult.success(param+haha);
     }
 
   /*  @PostMapping("/test2")

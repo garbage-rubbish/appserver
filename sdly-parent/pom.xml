@@ -40,9 +40,24 @@
         <commons.collections.version>3.2.1</commons.collections.version>
         <commons.math3.version>3.6.1</commons.math3.version>
         <guava.version>27.0.1-jre</guava.version>
+        <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>${springboot.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jsonwebtoken.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>

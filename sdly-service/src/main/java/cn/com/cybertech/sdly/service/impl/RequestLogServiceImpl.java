@@ -1,7 +1,5 @@
 package cn.com.cybertech.sdly.service.impl;
 
-import cn.com.cybertech.sdly.annotations.ChangeDataSource;
-import cn.com.cybertech.sdly.datasource.DataSourceContextHolder;
 import cn.com.cybertech.sdly.model.po.RequestLog;
 import cn.com.cybertech.sdly.service.RequestLogService;
 import org.springframework.stereotype.Service;

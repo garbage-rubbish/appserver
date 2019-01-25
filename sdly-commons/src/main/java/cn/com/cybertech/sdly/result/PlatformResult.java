@@ -1,6 +1,7 @@
 package cn.com.cybertech.sdly.result;
 
 import cn.com.cybertech.sdly.enums.ResultCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,12 +47,6 @@ public class PlatformResult implements Result {
         return result;
     }
 
-    public static PlatformResult failure(String message) {
-        PlatformResult result = new PlatformResult();
-        result.setCode(ResultCode.PARAM_IS_INVALID.getCode());
-        result.setMessage(message);
-        return result;
-    }
 
     private void setResultCode(ResultCode code) {
         this.code = code.getCode();
