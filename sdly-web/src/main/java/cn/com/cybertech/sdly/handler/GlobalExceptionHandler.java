@@ -86,7 +86,6 @@ public class GlobalExceptionHandler {
     public PlatformResult handleAccessDeniedException(AccessDeniedException e,HttpServletRequest request){
         return PlatformResult.failure(ResultCode.PERMISSIONS_INSUFFICIENT);
     }
-
     /**
      * 处理业务异常
      * @param request

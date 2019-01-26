@@ -13,4 +13,5 @@ public class Constants {
     public static final String TOKEN_CLAIMS_ROLES="roles";
 
     public static final String REDIS_LOGIN_USER_KEY = "login_user";
+    public static final String TOKEN_EXCEPTION_HEADER="TOKEN_EXCEPTION";
 }

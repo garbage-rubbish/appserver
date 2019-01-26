@@ -44,8 +44,16 @@ public class JWTRequestFilter extends BasicAuthenticationFilter {
             chain.doFilter(request,response);
             return ;
         }
-        //FIXME 拦截器校验token时 抛出校验异常 全局异常处理无法处理 将返回500
-        String username=JwtTokenUtil.getUsernameFromToken(token);
+
+        String username;
+        try{
+             username=JwtTokenUtil.getUsernameFromToken(token);
+        }catch (RuntimeException e){
+            //抛出token异常时 设置异常对象 交给CustomHttp403ForbiddenEntryPoint 处理 返回具体信息
+            request.setAttribute(Constants.TOKEN_EXCEPTION_HEADER,e);
+            chain.doFilter(request,response);
+            return ;
+        }
 
         if(StringUtils.isEmpty(username)){
             chain.doFilter(request,response);

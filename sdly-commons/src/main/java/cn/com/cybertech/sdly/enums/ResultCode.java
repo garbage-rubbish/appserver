@@ -10,13 +10,15 @@ public enum ResultCode {
     //操作成功
     SUCCESS(0, "ok"),
 
+    PARAM_IS_INVALID(10001, "参数无效"),
+
     USERNAME_PASSWORD_ERROR(20001,"用户名或密码错误"),
     USERNAME_NOT_EXIST(20002,"用户名不存在"),
     UN_AUTH_USER(20003,"用户未认证，拒绝访问"),
     PERMISSIONS_INSUFFICIENT(20004,"用户权限不足"),
 
+    TOKEN_EXPIRED(20007,"token 过期"),
     PARSE_TOKEN_ERROR(20006,"token解析失败"),
-    PARAM_IS_INVALID(10001, "参数无效"),
 
     NOT_SUPPORT_REQ_METHOD(40001,"不支持的http方法"),
 
