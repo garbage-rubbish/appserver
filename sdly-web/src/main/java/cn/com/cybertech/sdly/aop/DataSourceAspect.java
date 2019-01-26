@@ -33,7 +33,7 @@ public class DataSourceAspect {
         if(DataSourceContextHolder.dataSourceIds.contains(value)){
             DataSourceContextHolder.setDataSourceKey(value);
         }else{
-            log.warn("数据源:[{}],不存在使用默认数据源");
+            log.warn("数据源:[{}],不存在使用默认数据源",value);
         }
         try {
            return point.proceed();

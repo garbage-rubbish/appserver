@@ -22,6 +22,7 @@ import java.util.Properties;
 public class MybatisConfig {
 
 
+    //配置通用mapper
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
@@ -31,7 +32,7 @@ public class MybatisConfig {
         Properties properties = new Properties();
         properties.setProperty("mappers", CrudMapper.class.getName());
         properties.setProperty("notEmpty", "false");
-        properties.setProperty("IDENTITY", "ORACLE");
+        properties.setProperty("IDENTITY", "ORACLE");//TODO 通用mapper无法用于多数据源不同数据库
         properties.setProperty("ORDER","BEFORE");
         mapperScannerConfigurer.setProperties(properties);
         return mapperScannerConfigurer;

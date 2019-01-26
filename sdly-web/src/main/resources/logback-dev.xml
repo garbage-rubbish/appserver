@@ -30,7 +30,7 @@
 		</encoder>
 	</appender>
 	<logger name="cn.com.cybertech.sdly.mapper" level="debug"/>
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="BASELOG" />
 	</root>

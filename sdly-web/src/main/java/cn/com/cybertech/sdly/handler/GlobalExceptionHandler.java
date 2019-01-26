@@ -5,12 +5,10 @@ import cn.com.cybertech.sdly.exceptions.BusinessException;
 import cn.com.cybertech.sdly.helper.ParameterInvalidItemHelper;
 import cn.com.cybertech.sdly.model.other.ParameterInvalidItem;
 import cn.com.cybertech.sdly.result.PlatformResult;
-import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 /**
@@ -84,6 +81,12 @@ public class GlobalExceptionHandler {
         return PlatformResult.failure(ResultCode.NOT_SUPPORT_REQ_METHOD);
     }
 
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public PlatformResult handleAccessDeniedException(AccessDeniedException e,HttpServletRequest request){
+        return PlatformResult.failure(ResultCode.PERMISSIONS_INSUFFICIENT);
+    }
+
     /**
      * 处理业务异常
      * @param request
@@ -106,7 +109,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Throwable.class)
-    public PlatformResult handleException(Exception e,HttpServletRequest request){
+    public PlatformResult handleException(Throwable e,HttpServletRequest request){
         log.error("handleThrowable start, uri:{}, caused by: ", request.getRequestURI(), e);
         return PlatformResult.failure(ResultCode.SYSTEM_INNER_ERROR);
     }

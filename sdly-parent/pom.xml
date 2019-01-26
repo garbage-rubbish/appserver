@@ -27,7 +27,7 @@
         <druid.version>1.1.10</druid.version>
         <tk.mapper.version>3.4.6</tk.mapper.version>
         <springboot.tk.mapper.version>2.0.4</springboot.tk.mapper.version>
-        <swagger.version>2.6.1</swagger.version>
+        <swagger.version>2.9.2</swagger.version>
         <pagehelper.version>1.2.5</pagehelper.version>
         <swgger.version>2.2.2</swgger.version>
         <hibernate.validator.version>5.3.1.Final</hibernate.validator.version>

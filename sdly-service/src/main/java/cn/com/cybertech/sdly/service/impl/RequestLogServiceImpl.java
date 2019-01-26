@@ -1,5 +1,6 @@
 package cn.com.cybertech.sdly.service.impl;
 
+import cn.com.cybertech.sdly.annotations.ChangeDataSource;
 import cn.com.cybertech.sdly.model.po.RequestLog;
 import cn.com.cybertech.sdly.service.RequestLogService;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,8 @@ public class RequestLogServiceImpl extends BaseServiceImpl<RequestLog,String> im
 
     @Override
     @Transactional
-    //@ChangeDataSource
+    @ChangeDataSource
     public String insert(RequestLog record) {
-        //DataSourceContextHolder.setDataSourceKey("master");
         return super.insert(record);
 
 

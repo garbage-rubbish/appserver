@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * Created by huangkd on 2019/1/25.
- * 处理spring security 403
+ * 处理无权限访问时 返回403
  */
 public class CustomHttp403ForbiddenEntryPoint  implements AuthenticationEntryPoint {
     @Override

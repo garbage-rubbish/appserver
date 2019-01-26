@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by huangkd on 2019/1/26.
+ * 自定义密码加密 采用明文
  */
 @Component
 public class CustomPasswordEncoder implements PasswordEncoder {

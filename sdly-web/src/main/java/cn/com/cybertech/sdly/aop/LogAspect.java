@@ -73,6 +73,7 @@ public class LogAspect {
             Date date=new Date();
             RequestLog requestLog=new RequestLog(date,date,className,methodName,ip,params,reqUrl,desc,resultStr,spendTime);
             // TODO requestLogService.insert(requestLog); 请求数据源和日志数据源不同报错
+            //
             log.info("requestLog:{}",requestLog);
             return resultObj;
         } catch (Throwable throwable) {

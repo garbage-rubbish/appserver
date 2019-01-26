@@ -13,6 +13,7 @@ public enum ResultCode {
     USERNAME_PASSWORD_ERROR(20001,"用户名或密码错误"),
     USERNAME_NOT_EXIST(20002,"用户名不存在"),
     UN_AUTH_USER(20003,"用户未认证，拒绝访问"),
+    PERMISSIONS_INSUFFICIENT(20004,"用户权限不足"),
 
     PARSE_TOKEN_ERROR(20006,"token解析失败"),
     PARAM_IS_INVALID(10001, "参数无效"),

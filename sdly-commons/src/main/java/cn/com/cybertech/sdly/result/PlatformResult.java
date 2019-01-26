@@ -2,6 +2,7 @@ package cn.com.cybertech.sdly.result;
 
 import cn.com.cybertech.sdly.enums.ResultCode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +15,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlatformResult implements Result {
+public class PlatformResult<T> implements Result {
     private static final long serialVersionUID = -6406922540005550779L;
 
     private int code;
     private String message;
-    private Object data;
+    private T data;
 
     public static PlatformResult success() {
         PlatformResult result = new PlatformResult();
@@ -27,21 +28,21 @@ public class PlatformResult implements Result {
         return result;
     }
 
-    public static PlatformResult success(Object data) {
-        PlatformResult result = new PlatformResult();
+    public static <T> PlatformResult<T> success(T data) {
+        PlatformResult<T> result = new PlatformResult<>();
         result.setResultCode(ResultCode.SUCCESS);
         result.setData(data);
         return result;
     }
 
-    public static PlatformResult failure(ResultCode resultCode) {
-        PlatformResult result = new PlatformResult();
+    public static <T> PlatformResult<T> failure(ResultCode resultCode) {
+        PlatformResult<T> result = new PlatformResult<>();
         result.setResultCode(resultCode);
         return result;
     }
 
-    public static PlatformResult failure(ResultCode resultCode, Object data) {
-        PlatformResult result = new PlatformResult();
+    public static <T> PlatformResult<T> failure(ResultCode resultCode, T data) {
+        PlatformResult<T> result = new PlatformResult<>();
         result.setResultCode(resultCode);
         result.setData(data);
         return result;
