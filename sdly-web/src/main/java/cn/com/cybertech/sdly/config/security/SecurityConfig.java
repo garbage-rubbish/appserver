@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationEntryPoint getAuthenticationEntryPoint(){
-        return new CustomHttp403ForbiddenEntryPoint();
+        return new CustomAuthenticationExceptionEntryPoint();
     }
 
     @Override

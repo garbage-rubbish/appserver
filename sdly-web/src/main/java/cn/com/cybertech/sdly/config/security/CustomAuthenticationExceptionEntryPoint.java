@@ -18,14 +18,17 @@ import java.io.IOException;
 
 /**
  * Created by huangkd on 2019/1/25.
- * 处理无权限访问时 返回403
+ * 未经过认证抛出异常时 通过此类处理
  */
-public class CustomHttp403ForbiddenEntryPoint  implements AuthenticationEntryPoint {
+public class CustomAuthenticationExceptionEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
 
         Object token_exception = httpServletRequest.getAttribute(Constants.TOKEN_EXCEPTION_HEADER);
-        if(token_exception instanceof SignatureException|| token_exception instanceof UnsupportedJwtException || token_exception instanceof MalformedJwtException || token_exception instanceof IllegalArgumentException){
+        if(token_exception instanceof SignatureException
+                || token_exception instanceof UnsupportedJwtException
+                || token_exception instanceof MalformedJwtException
+                || token_exception instanceof IllegalArgumentException){
             //token 验证异常
             write(httpServletResponse,PlatformResult.failure(ResultCode.PARSE_TOKEN_ERROR));
         }else if(token_exception instanceof ExpiredJwtException){
