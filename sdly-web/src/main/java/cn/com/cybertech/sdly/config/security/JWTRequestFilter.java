@@ -49,7 +49,7 @@ public class JWTRequestFilter extends BasicAuthenticationFilter {
         try{
              username=JwtTokenUtil.getUsernameFromToken(token);
         }catch (RuntimeException e){
-            //抛出token异常时 设置异常对象 交给CustomHttp403ForbiddenEntryPoint 处理 返回具体信息
+            //将抛出的token解析异常设置到request中 在后面针对处理
             request.setAttribute(Constants.TOKEN_EXCEPTION_HEADER,e);
             chain.doFilter(request,response);
             return ;

@@ -3,12 +3,9 @@ package cn.com.cybertech.sdly.handler;
 import cn.com.cybertech.sdly.enums.ResultCode;
 import cn.com.cybertech.sdly.exceptions.BusinessException;
 import cn.com.cybertech.sdly.helper.ParameterInvalidItemHelper;
-import cn.com.cybertech.sdly.model.other.ParameterInvalidItem;
 import cn.com.cybertech.sdly.result.PlatformResult;
-import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -82,10 +79,6 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public PlatformResult handleAccessDeniedException(AccessDeniedException e,HttpServletRequest request){
-        return PlatformResult.failure(ResultCode.PERMISSIONS_INSUFFICIENT);
-    }
     /**
      * 处理业务异常
      * @param request
@@ -102,11 +95,9 @@ public class GlobalExceptionHandler {
         return PlatformResult.failure(ResultCode.PARAM_IS_INVALID);
     }
 
-    @ExceptionHandler
-    public PlatformResult handleSignatureException(SignatureException e,HttpServletRequest request){
-        return PlatformResult.failure(ResultCode.PARSE_TOKEN_ERROR);
-    }
 
+
+    //其他异常
     @ExceptionHandler(Throwable.class)
     public PlatformResult handleException(Throwable e,HttpServletRequest request){
         log.error("handleThrowable start, uri:{}, caused by: ", request.getRequestURI(), e);

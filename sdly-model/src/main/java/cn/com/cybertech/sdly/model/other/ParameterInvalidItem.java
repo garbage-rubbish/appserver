@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Created by huangkd on 2019/1/23.
+ * 无效参数项
  */
 @Data
 @NoArgsConstructor
