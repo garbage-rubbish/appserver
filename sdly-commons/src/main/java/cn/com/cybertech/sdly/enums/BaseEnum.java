@@ -5,9 +5,7 @@ package cn.com.cybertech.sdly.enums;
  */
 public interface BaseEnum {
 
-    int getCode();
+    String getCode();
     String getValue();
-    void setCode(int code);
-    void setValue(String value);
 
 }
