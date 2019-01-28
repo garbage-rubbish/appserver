@@ -1,6 +1,7 @@
 package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.Log;
+import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
 import cn.com.cybertech.sdly.enums.ResultCode;
 import cn.com.cybertech.sdly.exceptions.BusinessException;
 import cn.com.cybertech.sdly.model.po.RequestLog;
@@ -40,7 +41,7 @@ public class LogAspect {
     private RequestLogService requestLogService;
 
     @Around("logPointCut()")
-    public Object handleRequestLog(ProceedingJoinPoint proceedingJoinPoint){
+    public Object handleRequestLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         //requestAttributes 在请求子线程中为空，可以开启子线程共享解决
         //RequestContextHolder.setRequestAttributes(requestAttributes,true);
@@ -49,7 +50,7 @@ public class LogAspect {
         String methodName=proceedingJoinPoint.getSignature().getName();
         String ip=request.getRemoteAddr();
         String params;
-        Gson gson= new GsonBuilder().enableComplexMapKeySerialization().create();
+        Gson gson= new Gson();
        /* if(proceedingJoinPoint.getArgs()!=null&&proceedingJoinPoint.getArgs().length>0){
             StringBuilder paramsSb=new StringBuilder();
             for(int i=0;i<proceedingJoinPoint.getArgs().length;i++){
@@ -59,26 +60,21 @@ public class LogAspect {
             params=paramsSb.toString();
         }*/
 
-        String resultStr;
         params=gson.toJson(request.getParameterMap());
         String reqUrl=request.getRequestURL().toString();
-        try {
+        Stopwatch stopwatch=Stopwatch.createStarted();
+        Object resultObj = proceedingJoinPoint.proceed();
+        long spendTime=stopwatch.elapsed(TimeUnit.MILLISECONDS);
+        String resultStr=gson.toJson(resultObj);
+        Log annotation = getAnnotation(proceedingJoinPoint, Log.class);
+        String desc=annotation.value();
+        Date date=new Date();
+        RequestLog requestLog=new RequestLog(date,date,className,methodName,ip,params,reqUrl,desc,resultStr,spendTime);
+        //手动切换到主数据源
+        DataSourceContextHolder.setDataSourceKey("master");
+        requestLogService.insert(requestLog);
+        return resultObj;
 
-            Stopwatch stopwatch=Stopwatch.createStarted();
-            Object resultObj = proceedingJoinPoint.proceed();
-            long spendTime=stopwatch.elapsed(TimeUnit.MILLISECONDS);
-            resultStr=gson.toJson(resultObj);
-            Log annotation = getAnnotation(proceedingJoinPoint, Log.class);
-            String desc=annotation.value();
-            Date date=new Date();
-            RequestLog requestLog=new RequestLog(date,date,className,methodName,ip,params,reqUrl,desc,resultStr,spendTime);
-            // TODO requestLogService.insert(requestLog); 请求数据源和日志数据源不同报错
-            //
-            log.info("requestLog:{}",requestLog);
-            return resultObj;
-        } catch (Throwable throwable) {
-            throw new BusinessException(ResultCode.SYSTEM_INNER_ERROR);
-        }
     }
 
      <T extends Annotation> T getAnnotation(JoinPoint joinPoint,Class<T> tClass){

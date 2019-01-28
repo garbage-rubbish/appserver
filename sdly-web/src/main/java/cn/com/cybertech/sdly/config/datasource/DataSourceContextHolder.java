@@ -19,8 +19,16 @@ public class DataSourceContextHolder {
 
     public static void setDataSourceKey(String key){
         log.info("切换数据源:{}",key);
-        dataSourceKey.set(key);
+        if(dataSourceIds.contains(key)){
+            dataSourceKey.set(key);
+        }else{
+            throw new RuntimeException(String.format("数据源:%s 不存在",key));
+        }
+
     }
+
+
+
     public static String getDataSourceKey(){
         return dataSourceKey.get();
     }

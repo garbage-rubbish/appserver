@@ -67,24 +67,16 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         if(StringUtils.isNotEmpty(environment.getProperty("other.datasource.prefix"))){
             otherPrefix=environment.getProperty("other.datasource.prefix");
         }
-        //主库设置成默认库
-        Map defaultDataSourceProperties= binder.bind(masterPrefix,Map.class).get();
-        String type=environment.getProperty(masterPrefix+".type");
-        Class<? extends DataSource> dataSourceType = getDataSourceType(type);
-        DataSource defaultDataSource=bind(dataSourceType,defaultDataSourceProperties);
-        DataSourceContextHolder.dataSourceIds.add("master");
-        log.info("主数据源注册成功,url:{}",environment.getProperty(masterPrefix+".url"));
-
-        //配置其他数据源
+        //主库
+        Map master= binder.bind(masterPrefix,Map.class).get();
         List<Map> configs=binder.bind(otherPrefix,Bindable.listOf(Map.class)).get();
-        Map config;
-        for(int i=0;i<configs.size();i++){
-            config=configs.get(i);
-            Class<? extends DataSource> clazz=getDataSourceType(config.get("type").toString());
+        configs.add(master);
+        for (Map config : configs) {
+            Class<? extends DataSource> clazz = getDataSourceType(config.get("type").toString());
             DataSource otherDataSource = bind(clazz, config);
             DataSourceContextHolder.dataSourceIds.add(config.get("key").toString());
-            dataSources.put(config.get("key").toString(),otherDataSource);
-            log.info("数据源[{}],注册成功",config.get("key").toString());
+            dataSources.put(config.get("key").toString(), otherDataSource);
+            log.info("数据源[{}],注册成功", config.get("key").toString());
         }
         // bean定义类
         GenericBeanDefinition define = new GenericBeanDefinition();
@@ -92,13 +84,12 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         define.setBeanClass(DynamicDataSource.class);
         // 需要注入的参数
         MutablePropertyValues mpv = define.getPropertyValues();
-        // 添加默认数据源，避免key不存在的情况没有数据源可用
-        mpv.add("defaultTargetDataSource", defaultDataSource);
+
         // 添加其他数据源
         mpv.add("targetDataSources", dataSources);
         // 将该bean注册为datasource，不使用springboot自动生成的datasource
         beanDefinitionRegistry.registerBeanDefinition("datasource", define);
-        log.info("数据源注册完成,[{}]", Arrays.toString(dataSources.keySet().toArray()));
+        log.info("数据源注册完成,[{}]", DataSourceContextHolder.dataSourceIds.toString());
     }
 
     private Class<? extends DataSource> getDataSourceType(String className){

@@ -15,10 +15,10 @@ public class RequestLogServiceImpl extends BaseServiceImpl<RequestLog,String> im
 
     @Override
     @Transactional
-    @ChangeDataSource
     public String insert(RequestLog record) {
-        return super.insert(record);
-
+         super.insert(record);
+        //int i=1/0;
+         return "";
 
     }
 }

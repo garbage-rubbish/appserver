@@ -2,6 +2,7 @@ package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.ChangeDataSource;
 import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
+import cn.com.cybertech.sdly.exceptions.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -29,12 +30,7 @@ public class DataSourceAspect {
         MethodSignature methodSignature= (MethodSignature) point.getSignature();
         ChangeDataSource annotation = methodSignature.getMethod().getAnnotation(ChangeDataSource.class);
         String value = annotation.value();
-        //如果 datasource key 存在直接使用
-        if(DataSourceContextHolder.dataSourceIds.contains(value)){
-            DataSourceContextHolder.setDataSourceKey(value);
-        }else{
-            log.warn("数据源:[{}],不存在使用默认数据源",value);
-        }
+        DataSourceContextHolder.setDataSourceKey(value);
         try {
            return point.proceed();
         } finally {

@@ -1,5 +1,6 @@
 package cn.com.cybertech.sdly.helper;
 
+import cn.com.cybertech.sdly.model.other.ParameterInvalidItem;
 import com.google.common.collect.Lists;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;

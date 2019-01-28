@@ -3,6 +3,7 @@ package cn.com.cybertech.sdly.controller;
 import cn.com.cybertech.sdly.annotations.ChangeDataSource;
 import cn.com.cybertech.sdly.annotations.Log;
 import cn.com.cybertech.sdly.annotations.ResponseResult;
+import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
 import cn.com.cybertech.sdly.mapper.RequestLogMapper;
 import cn.com.cybertech.sdly.mapper.UserMapper;
 import cn.com.cybertech.sdly.model.po.RequestLog;
@@ -56,10 +57,15 @@ public class TestController {
     }
 
     @GetMapping("/test1")
-    @ChangeDataSource("zhuma_user")
+    @ChangeDataSource("psms1")
     @Log("tset")
     @PreAuthorize("hasAuthority('ROLE_MJ')")
     public PlatformResult<String> test1(){
+        //DataSourceContextHolder.setDataSourceKey("psms1");
+        RequestLog requestLog=requestLogMapper.selectByPrimaryKey("2");
+        //DataSourceContextHolder.remove();
+        System.out.println(requestLog);
+
         return PlatformResult.success("sss");
     }
 

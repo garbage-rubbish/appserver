@@ -3,7 +3,9 @@ package cn.com.cybertech.sdly.handler;
 import cn.com.cybertech.sdly.enums.ResultCode;
 import cn.com.cybertech.sdly.exceptions.BusinessException;
 import cn.com.cybertech.sdly.helper.ParameterInvalidItemHelper;
+import cn.com.cybertech.sdly.model.other.ParameterInvalidItem;
 import cn.com.cybertech.sdly.result.PlatformResult;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by huangkd on 2019/1/23.
@@ -32,27 +35,29 @@ public class GlobalExceptionHandler {
      * @param request
      * @return
      */
-    @ExceptionHandler(ConstraintViolationException.class)
+    /*@ExceptionHandler(ConstraintViolationException.class)
     public PlatformResult handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request){
         log.info("handleConstraintViolationException start, uri:{}, caused by: ", request.getRequestURI(), e);
+        //无效参数列表
         List<ParameterInvalidItem> parameterInvalidItems = ParameterInvalidItemHelper.convertCVEToParameterInvalidItem(e);
         return PlatformResult.failure(ResultCode.PARAM_IS_INVALID,parameterInvalidItems);
     }
 
 
-    /**
+    *//**
      * 处理参数绑定时异常
      * @param e
      * @param request
      * @return
-     */
+     *//*
     @ExceptionHandler(BindException.class)
     public PlatformResult handleBindException(BindException e, HttpServletRequest request) {
         log.info("handleBindException start, uri:{}, caused by: ", request.getRequestURI(), e);
+        //无效参数列表
         List<ParameterInvalidItem> parameterInvalidItemList = ParameterInvalidItemHelper.converBRToParameterInvalidItem(e.getBindingResult());
         return PlatformResult.failure(ResultCode.PARAM_IS_INVALID, parameterInvalidItemList);
     }
-
+*/
     /**
      * @param e
      * @param request
@@ -61,6 +66,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public PlatformResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         log.info("handleMethodArgumentNotValidException start, uri:{}, caused by: ", request.getRequestURI(), e);
+        //无效参数列表
         List<ParameterInvalidItem> parameterInvalidItemList = ParameterInvalidItemHelper.converBRToParameterInvalidItem(e.getBindingResult());
         return PlatformResult.failure(ResultCode.PARAM_IS_INVALID, parameterInvalidItemList);
     }
@@ -69,7 +75,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public PlatformResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e, HttpServletRequest request){
         log.info("handleMissingServletRequestParameterException start, uri:{}, caused by: ", request.getRequestURI(), e);
-        return PlatformResult.failure(ResultCode.PARAM_IS_INVALID);
+        Map<String,String> map= Maps.newHashMap();
+        map.put(e.getParameterName(),e.getMessage());
+        return PlatformResult.failure(ResultCode.PARAM_IS_INVALID,map);
     }
 
 

@@ -1,5 +1,7 @@
 package cn.com.cybertech.sdly.service;
 
+import cn.com.cybertech.sdly.model.other.LoginUser;
+
 /**
  * Created by huangkd on 2019/1/25.
  */

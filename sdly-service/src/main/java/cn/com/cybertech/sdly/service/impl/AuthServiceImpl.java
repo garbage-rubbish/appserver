@@ -1,5 +1,6 @@
 package cn.com.cybertech.sdly.service.impl;
 
+import cn.com.cybertech.sdly.model.other.LoginUser;
 import cn.com.cybertech.sdly.model.po.User;
 import cn.com.cybertech.sdly.service.AuthService;
 import cn.com.cybertech.sdly.service.UserService;
