@@ -1,6 +1,5 @@
 package cn.com.cybertech.sdly.model.vo;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import cn.com.cybertech.sdly.model.Model;
 import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
@@ -11,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;

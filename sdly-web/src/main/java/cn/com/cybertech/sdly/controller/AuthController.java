@@ -1,5 +1,6 @@
 package cn.com.cybertech.sdly.controller;
 
+import cn.com.cybertech.sdly.annotations.Log;
 import cn.com.cybertech.sdly.model.other.LoginUser;
 import cn.com.cybertech.sdly.result.PlatformResult;
 import cn.com.cybertech.sdly.service.AuthService;
@@ -21,6 +22,7 @@ public class AuthController {
     private AuthService authService;
 
 
+    @Log
     @PostMapping("/login")
     public PlatformResult<String> login(@Validated @RequestBody LoginUser loginUser){
         return PlatformResult.success(authService.login(loginUser));

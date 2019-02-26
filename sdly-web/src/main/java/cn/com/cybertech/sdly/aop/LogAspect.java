@@ -2,13 +2,10 @@ package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.Log;
 import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
-import cn.com.cybertech.sdly.enums.ResultCode;
-import cn.com.cybertech.sdly.exceptions.BusinessException;
 import cn.com.cybertech.sdly.model.po.RequestLog;
 import cn.com.cybertech.sdly.service.RequestLogService;
 import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -49,18 +46,18 @@ public class LogAspect {
         String className = proceedingJoinPoint.getTarget().getClass().getName();
         String methodName=proceedingJoinPoint.getSignature().getName();
         String ip=request.getRemoteAddr();
-        String params;
+        String params="";
         Gson gson= new Gson();
-       /* if(proceedingJoinPoint.getArgs()!=null&&proceedingJoinPoint.getArgs().length>0){
+        if(proceedingJoinPoint.getArgs()!=null&&proceedingJoinPoint.getArgs().length>0){
             StringBuilder paramsSb=new StringBuilder();
             for(int i=0;i<proceedingJoinPoint.getArgs().length;i++){
                 String p=gson.toJson(proceedingJoinPoint.getArgs()[i]);
                 paramsSb.append(p);
             }
             params=paramsSb.toString();
-        }*/
+        }
 
-        params=gson.toJson(request.getParameterMap());
+        //params=gson.toJson(request.getParameterMap());
         String reqUrl=request.getRequestURL().toString();
         Stopwatch stopwatch=Stopwatch.createStarted();
         Object resultObj = proceedingJoinPoint.proceed();
@@ -71,8 +68,9 @@ public class LogAspect {
         Date date=new Date();
         RequestLog requestLog=new RequestLog(date,date,className,methodName,ip,params,reqUrl,desc,resultStr,spendTime);
         //手动切换到主数据源
+        log.info("request log:{}",requestLog.toString());
         DataSourceContextHolder.setDataSourceKey("master");
-        requestLogService.insert(requestLog);
+       // requestLogService.insert(requestLog);
         return resultObj;
 
     }

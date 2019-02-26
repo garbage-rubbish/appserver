@@ -14,7 +14,7 @@
         <module>sdly-mapper</module>
         <module>sdly-web</module>
         <module>sdly-service</module>
-        <module>sdly-model</module>
+        <module>sdly-cn.com.cybertech.sdly.model</module>
     </modules>
     <properties>
 

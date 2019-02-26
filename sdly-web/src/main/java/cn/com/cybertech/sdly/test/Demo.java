@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by huangkd on 2019/1/24.
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class Demo {
 
-    @NotNull
+    /*@NotNull
     private Integer id;
     @Length(min = 1,max = 2)
     private String name;
@@ -22,6 +23,8 @@ public class Demo {
 
     @Valid
     @NotNull
-    private Demo1 demo;
+    private Demo1 demo;*/
+
+    private List<String> a;
 
 }

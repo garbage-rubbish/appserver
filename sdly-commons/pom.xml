@@ -78,7 +78,7 @@
         </dependency>
      <!--   <dependency>
             <groupId>cn.com.cybertech.sdly</groupId>
-            <artifactId>sdly-model</artifactId>
+            <artifactId>sdly-cn.com.cybertech.sdly.model</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>-->

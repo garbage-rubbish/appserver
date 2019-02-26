@@ -42,6 +42,8 @@
         <guava.version>27.0.1-jre</guava.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
         <typeconfig.version>1.2.1</typeconfig.version>
+        <logback.logstash.version>4.10</logback.logstash.version>
+        <activiti.version>6.0.0</activiti.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -50,6 +52,19 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-devtools</artifactId>
                 <version>${springboot.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter-basic</artifactId>
+                <version>${activiti.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logback.logstash.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->

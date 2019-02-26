@@ -37,7 +37,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     /**
      * 存储已注册数据源
      */
-    private Map<String, DataSource> dataSources=new HashMap<>();
+    public static Map<String, DataSource> dataSources=new HashMap<>();
 
     private Binder binder;
     /**
@@ -49,6 +49,8 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         ALIASES.addAliases("username", "user");
         //ALIASES.addAliases("driverClassName","driver-class-name");
     }
+
+
 
     @Override
     public void setEnvironment(Environment environment) {
@@ -70,12 +72,15 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         //主库
         Map master= binder.bind(masterPrefix,Map.class).get();
         List<Map> configs=binder.bind(otherPrefix,Bindable.listOf(Map.class)).get();
-        configs.add(master);
+        String type=environment.getProperty(masterPrefix+".type");
+        Class<? extends DataSource> dataSourceType = getDataSourceType(type);
+
+        DataSource defaultDataSource=bind(dataSourceType,master);
         for (Map config : configs) {
             Class<? extends DataSource> clazz = getDataSourceType(config.get("type").toString());
-            DataSource otherDataSource = bind(clazz, config);
+            DataSource datasource = bind(clazz, config);
             DataSourceContextHolder.dataSourceIds.add(config.get("key").toString());
-            dataSources.put(config.get("key").toString(), otherDataSource);
+            dataSources.put(config.get("key").toString(), datasource);
             log.info("数据源[{}],注册成功", config.get("key").toString());
         }
         // bean定义类
@@ -84,11 +89,14 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         define.setBeanClass(DynamicDataSource.class);
         // 需要注入的参数
         MutablePropertyValues mpv = define.getPropertyValues();
-
+        //添加默认数据源
+        mpv.add("defaultTargetDataSource",defaultDataSource);
+        DataSourceContextHolder.dataSourceIds.add("master");
         // 添加其他数据源
         mpv.add("targetDataSources", dataSources);
         // 将该bean注册为datasource，不使用springboot自动生成的datasource
         beanDefinitionRegistry.registerBeanDefinition("datasource", define);
+
         log.info("数据源注册完成,[{}]", DataSourceContextHolder.dataSourceIds.toString());
     }
 

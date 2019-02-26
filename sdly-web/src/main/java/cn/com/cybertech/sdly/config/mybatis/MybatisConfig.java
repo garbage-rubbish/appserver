@@ -1,7 +1,11 @@
 package cn.com.cybertech.sdly.config.mybatis;
 
 import cn.com.cybertech.sdly.common.mapper.CrudMapper;
+import cn.com.cybertech.sdly.config.datasource.DynamicDataSource;
+import cn.com.cybertech.sdly.config.datasource.DynamicDataSourceRegister;
 import lombok.Data;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -21,7 +25,6 @@ import java.util.Properties;
 @AutoConfigureAfter(MybatisAutoConfiguration.class)
 public class MybatisConfig {
 
-
     //配置通用mapper
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
@@ -37,7 +40,6 @@ public class MybatisConfig {
         mapperScannerConfigurer.setProperties(properties);
         return mapperScannerConfigurer;
     }
-
 
 
 

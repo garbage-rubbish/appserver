@@ -3,26 +3,20 @@ package cn.com.cybertech.sdly.controller;
 import cn.com.cybertech.sdly.annotations.ChangeDataSource;
 import cn.com.cybertech.sdly.annotations.Log;
 import cn.com.cybertech.sdly.annotations.ResponseResult;
-import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
 import cn.com.cybertech.sdly.mapper.RequestLogMapper;
-import cn.com.cybertech.sdly.mapper.UserMapper;
+import cn.com.cybertech.sdly.mapper.TestUserMapper;
 import cn.com.cybertech.sdly.model.po.RequestLog;
+import cn.com.cybertech.sdly.model.po.TestUser;
 import cn.com.cybertech.sdly.model.po.User;
 import cn.com.cybertech.sdly.model.qo.PageQo;
 import cn.com.cybertech.sdly.result.PlatformResult;
-import cn.com.cybertech.sdly.result.TestResult;
 import cn.com.cybertech.sdly.service.RequestLogService;
-import cn.com.cybertech.sdly.service.UserService;
-import cn.com.cybertech.sdly.service.impl.BaseServiceImpl;
-import cn.com.cybertech.sdly.service.impl.UserServiceImpl;
+import cn.com.cybertech.sdly.service.TestUserService;
 import cn.com.cybertech.sdly.test.Demo;
 import cn.com.cybertech.sdly.test.Demo1;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +38,13 @@ public class TestController {
    /* @Autowired
     private UserMapper userMapper;
 */
+
    @Autowired
-   private UserService userService;
+   private TestUserService testUserService;
+
+
+   @Autowired
+   private TestUserMapper testUserMapper;
 
     @GetMapping("/test")
     @Log("测试")
@@ -77,6 +76,12 @@ public class TestController {
     @GetMapping("test3")
     public PlatformResult<User> test3(@RequestParam String param, @RequestParam Demo1 haha){
         return PlatformResult.success(new User());
+    }
+    @GetMapping("test4")
+    @ChangeDataSource
+    public PlatformResult<TestUser> test4(){
+        TestUser testUser = testUserMapper.selectByPrimaryKey("1");
+        return PlatformResult.success(testUser);
     }
 
   /*  @PostMapping("/test2")
