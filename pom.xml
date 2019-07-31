@@ -9,12 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>sdly-commons</module>
         <module>sdly-parent</module>
-        <module>sdly-mapper</module>
         <module>sdly-web</module>
-        <module>sdly-service</module>
-        <module>sdly-cn.com.cybertech.sdly.model</module>
     </modules>
     <properties>
 

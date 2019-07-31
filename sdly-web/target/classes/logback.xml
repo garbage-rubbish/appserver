@@ -9,11 +9,8 @@
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
-	<!--<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-		<destination>localhost:39999</destination>
-		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
-	</appender>
--->
+
+
 	<appender name="BASELOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>logs/api-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
@@ -33,10 +30,9 @@
 		</encoder>
 	</appender>
 	<logger name="cn.com.cybertech.sdly.mapper" level="debug"/>
-	<root level="debug">
+	<root level="info">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="BASELOG" />
-		<appender-ref ref="LOGSTASH"/>
 	</root>
 
 
