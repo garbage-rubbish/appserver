@@ -37,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(customPasswordEncoder);
     }
 
-    //将AuthenticationManager 交由spring管理
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -64,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //添加security 无权限访问返回403
         http.exceptionHandling().authenticationEntryPoint(getAuthenticationEntryPoint());
         http.authorizeRequests()
-                .antMatchers("/auth/**","/activiti/**","/swagger-ui.html").permitAll()
+                .antMatchers("/auth/**","/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()

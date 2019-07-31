@@ -1,6 +1,7 @@
 package cn.com.cybertech.sdly.model;
 
-import cn.com.cybertech.sdly.model.po.User;
+import cn.com.cybertech.sdly.model.po.TpRole;
+import cn.com.cybertech.sdly.model.po.TpUser;
 import com.google.common.collect.Lists;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,14 +22,13 @@ public class JwtUser implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public JwtUser(User user){
-        List<String> roles = user.getRoles();
+    public JwtUser(TpUser user, List<TpRole> roles){
         List<GrantedAuthority> authorities= Lists.newArrayList();
-        for(String role:roles){
-            authorities.add(new SimpleGrantedAuthority(role));
+        for(TpRole role:roles){
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         this.id=user.getId();
-        this.username=user.getUsername();
+        this.username=user.getMjjh();
         this.password=user.getPassword();
         this.authorities=authorities;
 

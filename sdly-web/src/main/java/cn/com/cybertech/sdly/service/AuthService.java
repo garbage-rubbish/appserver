@@ -12,8 +12,8 @@ public interface AuthService {
      * @param loginUser
      * @return
      */
-    String login(LoginUser loginUser);
+    String login(String username, String password);
 
-    boolean logout();
+    void logout();
 
 }

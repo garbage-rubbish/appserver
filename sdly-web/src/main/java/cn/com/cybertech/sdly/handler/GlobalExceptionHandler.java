@@ -8,6 +8,8 @@ import cn.com.cybertech.sdly.result.PlatformResult;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -85,6 +87,11 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public PlatformResult handleBadCredentialsException(BadCredentialsException e,HttpServletRequest request){
+        return PlatformResult.failure(ResultCode.USERNAME_PASSWORD_ERROR);
+    }
+
     /**
      * 处理业务异常
      * @param request
@@ -92,17 +99,22 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public PlatformResult handleBusinessException(BusinessException e, HttpServletRequest request){
-        log.info("handleBusinessException start, uri:{}, exception:{}, caused by: {}", request.getRequestURI(), e.getClass(), e.getMessage());
-        return PlatformResult.failure(e.getResultCode());
+        log.warn("handleBusinessException start, uri:{}, exception:{}, caused by: {}", request.getRequestURI(), e.getClass(), e.getStackTrace());
+        return PlatformResult.failure(e.getResultCode(),e.getData());
     }
+
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public PlatformResult handleHttpMessageNotReadableException(HttpMessageNotReadableException e,HttpServletRequest request){
         return PlatformResult.failure(ResultCode.PARAM_IS_INVALID);
+
+
     }
 
-
-
+    @ExceptionHandler(AccessDeniedException.class)
+    public PlatformResult handleAccessDeniedException(AccessDeniedException e,HttpServletRequest request){
+        return PlatformResult.failure(ResultCode.PERMISSIONS_INSUFFICIENT);
+    }
     //其他异常
     @ExceptionHandler(Throwable.class)
     public PlatformResult handleException(Throwable e,HttpServletRequest request){

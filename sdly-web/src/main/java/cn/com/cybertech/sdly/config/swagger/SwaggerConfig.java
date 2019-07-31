@@ -19,8 +19,8 @@ public class SwaggerConfig {
     @Bean
     public Docket demo1ApiDocket() {
         return new Docket(DocumentationType.SWAGGER_12)
-                .groupName("ceshi")
-                .apiInfo(new ApiInfoBuilder().title("ceshi").description("ceshi").build())
+                .groupName("zhejiang")
+                .apiInfo(new ApiInfoBuilder().title("zhejiang wttc").description("wttc").build())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("cn.com.cybertech.sdly.controller"))
                 .paths(PathSelectors.any())

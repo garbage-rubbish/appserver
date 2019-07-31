@@ -62,27 +62,27 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {
         String masterPrefix="spring.datasource.master";
-        String otherPrefix="spring.datasource.other";
+        //String otherPrefix="spring.datasource.other";
         if(StringUtils.isNotEmpty(environment.getProperty("master.datasource.prefix"))){
             masterPrefix=environment.getProperty("master.datasource.prefix");
         }
-        if(StringUtils.isNotEmpty(environment.getProperty("other.datasource.prefix"))){
-            otherPrefix=environment.getProperty("other.datasource.prefix");
-        }
+//        if(StringUtils.isNotEmpty(environment.getProperty("other.datasource.prefix"))){
+//            otherPrefix=environment.getProperty("other.datasource.prefix");
+//        }
         //主库
         Map master= binder.bind(masterPrefix,Map.class).get();
-        List<Map> configs=binder.bind(otherPrefix,Bindable.listOf(Map.class)).get();
+//        List<Map> configs=binder.bind(otherPrefix,Bindable.listOf(Map.class)).get();
         String type=environment.getProperty(masterPrefix+".type");
         Class<? extends DataSource> dataSourceType = getDataSourceType(type);
 
         DataSource defaultDataSource=bind(dataSourceType,master);
-        for (Map config : configs) {
-            Class<? extends DataSource> clazz = getDataSourceType(config.get("type").toString());
-            DataSource datasource = bind(clazz, config);
-            DataSourceContextHolder.dataSourceIds.add(config.get("key").toString());
-            dataSources.put(config.get("key").toString(), datasource);
-            log.info("数据源[{}],注册成功", config.get("key").toString());
-        }
+//        for (Map config : configs) {
+//            Class<? extends DataSource> clazz = getDataSourceType(config.get("type").toString());
+//            DataSource datasource = bind(clazz, config);
+//            DataSourceContextHolder.dataSourceIds.add(config.get("key").toString());
+//            dataSources.put(config.get("key").toString(), datasource);
+//            log.info("数据源[{}],注册成功", config.get("key").toString());
+//        }
         // bean定义类
         GenericBeanDefinition define = new GenericBeanDefinition();
         // 设置bean的类型，此处DynamicRoutingDataSource是继承AbstractRoutingDataSource的实现类

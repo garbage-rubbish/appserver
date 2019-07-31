@@ -1,14 +1,9 @@
 package cn.com.cybertech.sdly.service;
 
-import cn.com.cybertech.sdly.model.po.User;
+import cn.com.cybertech.sdly.model.po.TpUser;
 
-/**
- * Created by huangkd on 2019/1/22.
- */
 public interface UserService {
+    TpUser findUserByMjjh(String mjjh);
 
-    String insert(User user);
-
-    User findByUsername(String username);
-
+    int saveUser(TpUser tpUser);
 }

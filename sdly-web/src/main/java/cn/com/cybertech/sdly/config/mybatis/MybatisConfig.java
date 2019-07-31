@@ -1,8 +1,8 @@
 package cn.com.cybertech.sdly.config.mybatis;
 
-import cn.com.cybertech.sdly.common.mapper.CrudMapper;
 import cn.com.cybertech.sdly.config.datasource.DynamicDataSource;
 import cn.com.cybertech.sdly.config.datasource.DynamicDataSourceRegister;
+import cn.com.cybertech.sdly.mapper.CrudMapper;
 import lombok.Data;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -26,20 +26,18 @@ import java.util.Properties;
 public class MybatisConfig {
 
     //配置通用mapper
-    @Bean
+  /*  @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
         mapperScannerConfigurer.setBasePackage("cn.com.cybertech.sdly.mapper");
-
         Properties properties = new Properties();
         properties.setProperty("mappers", CrudMapper.class.getName());
         properties.setProperty("notEmpty", "false");
-        properties.setProperty("IDENTITY", "ORACLE");//TODO 通用mapper无法用于多数据源不同数据库
-        properties.setProperty("ORDER","BEFORE");
+        properties.setProperty("IDENTITY", "MYSQL");//TODO 通用mapper无法用于多数据源不同数据库
         mapperScannerConfigurer.setProperties(properties);
         return mapperScannerConfigurer;
-    }
+    }*/
 
 
 

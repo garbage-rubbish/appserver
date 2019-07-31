@@ -1,9 +1,9 @@
+/*
 package cn.com.cybertech.sdly.aop;
 
 import cn.com.cybertech.sdly.annotations.Log;
 import cn.com.cybertech.sdly.config.datasource.DataSourceContextHolder;
 import cn.com.cybertech.sdly.model.po.RequestLog;
-import cn.com.cybertech.sdly.service.RequestLogService;
 import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +23,11 @@ import java.lang.annotation.Annotation;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+*/
 /**
  * Created by huangkd on 2019/1/20.
- */
+ *//*
+
 @Aspect
 @Component
 @Slf4j
@@ -84,3 +86,4 @@ public class LogAspect {
 
 
 }
+*/
