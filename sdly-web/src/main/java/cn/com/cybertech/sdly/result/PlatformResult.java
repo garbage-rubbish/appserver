@@ -21,6 +21,15 @@ public class PlatformResult<T> implements Result {
     private int code;
     private String message;
     private T data;
+    private String test;
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
 
     public static PlatformResult success() {
         PlatformResult result = new PlatformResult();

@@ -1,5 +1,6 @@
 package cn.com.cybertech.sdly.model.po;
 
+import javax.xml.bind.annotation.XmlEnumValue;
 import java.io.Serializable;
 
 public class TpUser implements Serializable {
@@ -21,6 +22,7 @@ public class TpUser implements Serializable {
      *
      * @mbg.generated Tue May 28 15:52:54 CST 2019
      */
+    @XmlEnumValue("ss")
     private String mjjh;
 
     /**

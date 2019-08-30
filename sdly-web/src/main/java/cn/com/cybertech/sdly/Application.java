@@ -27,7 +27,4 @@ public class Application {
         System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "/Users/huangkangda/Documents/OpenSource/sdly-app-server/class ");
         SpringApplication.run(Application.class,args);
     }
-
-
-
 }
