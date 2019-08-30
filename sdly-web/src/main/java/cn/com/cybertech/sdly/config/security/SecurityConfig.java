@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder customPasswordEncoder;
 
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //添加自定义密码加密
@@ -52,14 +55,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      //  http.csrf().disable();
+//
+//        http.headers()
+//                .frameOptions()
+//                .sameOrigin()
+//                .and()
+//                // disable CSRF, http basic, form login
+//                .csrf().disable()
+//                // 跨域支持
+//                .cors().and()
+//
+//                .httpBasic().disable() //
+//                .formLogin().disable()
+//
+//                // ReST is stateless, no sessions
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ;//
+
+//        http.cors().and().csrf().disable();
+        http.csrf().disable();
+        //  http.csrf().disable();
        // http.authorizeRequests().antMatchers("/auth/**").anonymous().anyRequest().hasAnyRole();
         //添加自定义认证
         CustomAuthenticationProvider customAuthenticationProvider = new CustomAuthenticationProvider();
         customAuthenticationProvider.setJwtUserDetailService(userDetailsService);
         http.authenticationProvider(customAuthenticationProvider);
         //禁用跨域 session
-        http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+      //  http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //添加security 无权限访问返回403
         http.exceptionHandling().authenticationEntryPoint(getAuthenticationEntryPoint());
         http.authorizeRequests()
@@ -73,4 +94,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     }
+
+
 }

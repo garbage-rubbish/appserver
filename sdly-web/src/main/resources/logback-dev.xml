@@ -36,7 +36,7 @@
 	<root level="debug">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="BASELOG" />
-		<appender-ref ref="LOGSTASH"/>
+<!--		<appender-ref ref="LOGSTASH"/>-->
 	</root>
 
 
