@@ -6,3 +6,6 @@ gen
 *.log
 class
 sdly-commons
+class /
+sdly-web/src/main/resources/rebel.xml
+~/
