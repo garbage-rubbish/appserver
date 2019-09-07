@@ -19,8 +19,9 @@ public enum ResultCode {
     PARSE_TOKEN_ERROR(20006,"token解析失败"),
 
     NOT_SUPPORT_REQ_METHOD(40001,"不支持的http方法"),
+    RECORD_EXISTS(50002,"添加的数据已经存在"),
 
-    SYSTEM_INNER_ERROR(50001, "内部服务错误"), ADD_RECORD_FAIL(40002, "添加数据失败"), UPLOAD_FILE_FAIL(40003, "上传文件错误");
+    SYSTEM_INNER_ERROR(50001, "内部服务错误"), ADD_RECORD_FAIL(40002, "添加数据失败"), UPLOAD_FILE_FAIL(40003, "上传文件错误"), NOT_SUPPORT_MEDIA_TYPE(40004, "不支持的媒体类型");
     private int code;
     private String message;
 

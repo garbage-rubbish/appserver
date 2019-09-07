@@ -4,6 +4,24 @@
       "name": "file.upload",
       "type": "cn.com.cybertech.sdly.file.FileUploadProperties",
       "sourceType": "cn.com.cybertech.sdly.file.FileUploadProperties"
+    },
+    {
+      "name": "mybatis",
+      "type": "org.apache.ibatis.session.SqlSessionFactory",
+      "sourceType": "cn.com.cybertech.sdly.config.datasource.DataSourceConfig",
+      "sourceMethod": "sqlSessionFactory(javax.sql.DataSource)"
+    },
+    {
+      "name": "spring.datasource.druid",
+      "type": "javax.sql.DataSource",
+      "sourceType": "cn.com.cybertech.sdly.config.datasource.DataSourceConfig",
+      "sourceMethod": "dataSource()"
+    },
+    {
+      "name": "spring.datasource.druid1",
+      "type": "javax.sql.DataSource",
+      "sourceType": "cn.com.cybertech.sdly.config.datasource.DataSourceConfig",
+      "sourceMethod": "slaveDataSource()"
     }
   ],
   "properties": [

@@ -10,30 +10,20 @@ import java.util.List;
  */
 @Slf4j
 public class DataSourceContextHolder {
-    private static ThreadLocal<String> dataSourceKey=new ThreadLocal<>();
+    private static ThreadLocal<String> dataSourceKey = new ThreadLocal<>();
 
-    /**
-     * 存储已经注册的数据源
-     */
-    public static List<String> dataSourceIds=new ArrayList<>();
 
-    public static void setDataSourceKey(String key){
-        log.info("切换数据源:{}",key);
-        if(dataSourceIds.contains(key)){
-            dataSourceKey.set(key);
-        }else{
-            throw new RuntimeException(String.format("数据源:%s 不存在",key));
-        }
+    public static void setDataSourceKey(String key) {
+        dataSourceKey.set(key);
 
     }
 
 
-
-    public static String getDataSourceKey(){
+    public static String getDataSourceKey() {
         return dataSourceKey.get();
     }
 
-    public static void remove(){
+    public static void remove() {
         dataSourceKey.remove();
     }
 }

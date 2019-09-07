@@ -2,6 +2,7 @@ package cn.com.cybertech.sdly.model.po;
 
 import javax.xml.bind.annotation.XmlEnumValue;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class TpUser implements Serializable {
 
@@ -234,5 +235,22 @@ public class TpUser implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TpUser tpUser = (TpUser) o;
+        return Objects.equals(id, tpUser.id) &&
+                Objects.equals(mjjh, tpUser.mjjh) &&
+                Objects.equals(mjxm, tpUser.mjxm) &&
+                Objects.equals(mjbm, tpUser.mjbm) &&
+                Objects.equals(sfzh, tpUser.sfzh);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mjjh, mjxm, mjbm, sfzh);
     }
 }

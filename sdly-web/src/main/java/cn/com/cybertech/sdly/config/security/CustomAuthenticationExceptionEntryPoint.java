@@ -3,11 +3,12 @@ package cn.com.cybertech.sdly.config.security;
 import cn.com.cybertech.sdly.constants.Constants;
 import cn.com.cybertech.sdly.enums.ResultCode;
 import cn.com.cybertech.sdly.result.PlatformResult;
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import org.json.JSONObject;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -25,25 +26,24 @@ public class CustomAuthenticationExceptionEntryPoint implements AuthenticationEn
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
 
         Object token_exception = httpServletRequest.getAttribute(Constants.TOKEN_EXCEPTION_HEADER);
-        if(token_exception instanceof SignatureException
+        if (token_exception instanceof SignatureException
                 || token_exception instanceof UnsupportedJwtException
                 || token_exception instanceof MalformedJwtException
-                || token_exception instanceof IllegalArgumentException){
+                || token_exception instanceof IllegalArgumentException) {
             //token 验证异常
-            write(httpServletResponse,PlatformResult.failure(ResultCode.PARSE_TOKEN_ERROR));
-        }else if(token_exception instanceof ExpiredJwtException){
+            write(httpServletResponse, PlatformResult.failure(ResultCode.PARSE_TOKEN_ERROR));
+        } else if (token_exception instanceof ExpiredJwtException) {
             //token 过期异常
-            write(httpServletResponse,PlatformResult.failure(ResultCode.TOKEN_EXPIRED));
-        }else{
+            write(httpServletResponse, PlatformResult.failure(ResultCode.TOKEN_EXPIRED));
+        } else {
             //AccessDeniedException
-            write(httpServletResponse,PlatformResult.failure(ResultCode.UN_AUTH_USER));
+            write(httpServletResponse, PlatformResult.failure(ResultCode.UN_AUTH_USER));
         }
     }
 
-    private void write(HttpServletResponse response,PlatformResult result) throws IOException {
+    private void write(HttpServletResponse response, PlatformResult result) throws IOException {
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-type","application/json");
-        Gson gson=new Gson();
-        response.getWriter().write(gson.toJson(result));
+        response.setHeader("Content-type", "application/json");
+        response.getWriter().write(JSON.toJSON(result).toString());
     }
 }

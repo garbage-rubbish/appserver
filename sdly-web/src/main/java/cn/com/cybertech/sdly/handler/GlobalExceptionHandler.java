@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -85,7 +86,10 @@ public class GlobalExceptionHandler {
     public PlatformResult handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,HttpServletRequest request){
         return PlatformResult.failure(ResultCode.NOT_SUPPORT_REQ_METHOD);
     }
-
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public PlatformResult handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e){
+        return PlatformResult.failure(ResultCode.NOT_SUPPORT_MEDIA_TYPE);
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public PlatformResult handleBadCredentialsException(BadCredentialsException e,HttpServletRequest request){
