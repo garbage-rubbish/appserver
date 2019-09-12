@@ -25,41 +25,13 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    @Qualifier("jwtUserDetailServiceImpl")
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    private AuthService authService;
- /*   @Override
-    public String login(LoginUser loginUser) {
-        TpUser byUsername = userService.findUserByMjjh(loginUser.getUsername());
-        List<TpUserRole> userRoles = userRoleService.findUserRoleByUserId(byUsername.getId());
-        List<Integer> roleIds= Lists.newArrayList();
-        userRoles.forEach(userRole->roleIds.add(userRole.getRoleid()));
-        List<TpRole> roles = roleService.findRoleByIds(roleIds);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(loginUser.getUsername(),loginUser.getPassword());
-        Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        return JwtTokenUtil.createToken(byUsername,roles);
-
-
-    }
-*/
-
     @Override
     @ChangeDataSource
     public String login(String username, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        if(userDetails==null || !passwordEncoder.matches(userDetails.getPassword(),password)){
-            throw new BadCredentialsException("用户名或密码错误！");
-        }
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(userDetails.getUsername(),userDetails.getPassword());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(username,password);
         Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authenticate);
-        return JwtTokenUtil.createToken(userDetails);
+        return JwtTokenUtil.createToken(username);
     }
 
     @Override

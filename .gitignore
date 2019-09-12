@@ -3,9 +3,10 @@
 *.iml
 out
 gen
-*.log
 class
-sdly-commons
-class /
-sdly-web/src/main/resources/rebel.xml
-~/
+*.log
+*.class
+log.log.0.2019-09-08
+log.log.0.2019-09-09
+log.log.0.2019-09-10
+sdly-web/target

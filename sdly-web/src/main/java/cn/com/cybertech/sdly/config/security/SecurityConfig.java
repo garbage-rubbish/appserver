@@ -5,16 +5,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * Created by huangkd on 2019/1/24.
@@ -33,10 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder customPasswordEncoder;
 
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //添加自定义密码加密
+        CustomAuthenticationProvider customAuthenticationProvider = new CustomAuthenticationProvider();
+        customAuthenticationProvider.setJwtUserDetailService(userDetailsService,customPasswordEncoder);
+        auth.authenticationProvider(customAuthenticationProvider);
         auth.userDetailsService(userDetailsService).passwordEncoder(customPasswordEncoder);
     }
 
@@ -51,6 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationEntryPoint getAuthenticationEntryPoint(){
         return new CustomAuthenticationExceptionEntryPoint();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**","/public/**");
     }
 
     @Override
@@ -72,23 +82,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ;//
 
 //        http.cors().and().csrf().disable();
-        http.csrf().disable();
         //  http.csrf().disable();
        // http.authorizeRequests().antMatchers("/auth/**").anonymous().anyRequest().hasAnyRole();
-        //添加自定义认证
-        CustomAuthenticationProvider customAuthenticationProvider = new CustomAuthenticationProvider();
-        customAuthenticationProvider.setJwtUserDetailService(userDetailsService);
-        http.authenticationProvider(customAuthenticationProvider);
+
         //禁用跨域 session
-      //  http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        SessionManagementConfigurer<HttpSecurity> httpSecuritySessionManagementConfigurer = http.sessionManagement();
+        http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //添加security 无权限访问返回403
         http.exceptionHandling().authenticationEntryPoint(getAuthenticationEntryPoint());
         http.authorizeRequests()
                 .antMatchers("/auth/**","/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers("/druid/**").permitAll()//druid
-                .antMatchers("/user/**").permitAll()//druid
+                .antMatchers("/druid/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                .anyRequest().authenticated();

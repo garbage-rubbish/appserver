@@ -35,6 +35,14 @@ public class JwtTokenUtil {
                 .setExpiration(getExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, Constants.TOKEN_SECRET).compact();
     }
+    public static String createToken(String userDetails){
+        Map<String,Object> map= Maps.newHashMap();
+        map.put(Constants.TOKEN_CLAIMS_USERNAME,userDetails);
+        return Jwts.builder()
+                .setClaims(map)
+                .setExpiration(getExpirationDate())
+                .signWith(SignatureAlgorithm.HS512, Constants.TOKEN_SECRET).compact();
+    }
     private static Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());

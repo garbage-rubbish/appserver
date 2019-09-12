@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -27,14 +28,14 @@ public class UserController {
 
     @ChangeDataSource("slaver")
     @GetMapping("/user/{mjjh}")
-    public Map<String,Object> getUserInfo(@PathVariable String mjjh){
+    public PlatformResult<UserInfo> getUserInfo(@PathVariable String mjjh){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(principal);
         TpUser tpUser = userService.findUserByMjjh(mjjh);
         UserInfo userInfo=new UserInfo();
         userInfo.setType(UserInfo.Type.IN);
         BeanUtils.copyProperties(tpUser,userInfo);
-        HashMap<String, Object> objectObjectHashMap = Maps.newHashMap();
-        objectObjectHashMap.put("sss",new ArrayList<>());
-        return objectObjectHashMap;
+        return PlatformResult.success(userInfo);
 
     }
 

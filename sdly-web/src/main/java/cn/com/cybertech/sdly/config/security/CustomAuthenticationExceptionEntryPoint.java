@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * Created by huangkd on 2019/1/25.
- * 认证过滤器getUsernamefromtoken 抛出异常在此处理
+ * 认证过滤器 #getUsernamefromtoken 抛出异常在此处理
  * 未经过认证抛出异常时 通过此类处理
  */
 public class CustomAuthenticationExceptionEntryPoint implements AuthenticationEntryPoint {
