@@ -15,7 +15,7 @@
 			<level>trace</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<FileNamePattern>${logging.path}/log.log.%i.%d{yyyy-MM-dd}</FileNamePattern>
+			<FileNamePattern>${logging.path}/log.log.%i.%d{yyyy-MM-dd}.log</FileNamePattern>
 			<MaxHistory>30</MaxHistory>
 			<maxFileSize>1mb</maxFileSize>
 		</rollingPolicy>

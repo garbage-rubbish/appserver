@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>sdly-parent</module>
-        <module>sdly-web</module>
+        <module>parent</module>
+        <module>web</module>
     </modules>
     <properties>
 
