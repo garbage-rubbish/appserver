@@ -10,8 +10,6 @@ log.log.0.2019-09-08
 log.log.0.2019-09-09
 log.log.0.2019-09-10
 target
-web/src/main/resources/cn/
-web/src/test/java/cn/
 web/target/classes/
 web/target/generated-sources/
 web/target/generated-test-sources/
