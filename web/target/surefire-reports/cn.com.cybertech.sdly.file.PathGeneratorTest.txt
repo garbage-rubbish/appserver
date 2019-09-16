@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: cn.com.cybertech.sdly.file.PathGeneratorTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.056 s <<< FAILURE! - in cn.com.cybertech.sdly.file.PathGeneratorTest
+ymdPath(cn.com.cybertech.sdly.file.PathGeneratorTest)  Time elapsed: 0.02 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:</2019/[5/28]/> but was:</2019/[7/31]/>
+	at cn.com.cybertech.sdly.file.PathGeneratorTest.ymdPath(PathGeneratorTest.java:23)
+
+ymPath(cn.com.cybertech.sdly.file.PathGeneratorTest)  Time elapsed: 0 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:</2019/[5]/> but was:</2019/[7]/>
+	at cn.com.cybertech.sdly.file.PathGeneratorTest.ymPath(PathGeneratorTest.java:28)
+
