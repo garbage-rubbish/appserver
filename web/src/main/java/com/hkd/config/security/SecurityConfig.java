@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Created by huangkd on 2019/1/24.
@@ -82,8 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //  http.csrf().disable();
        // http.authorizeRequests().antMatchers("/auth/**").anonymous().anyRequest().hasAnyRole();
 
-        //禁用跨域 session
-        SessionManagementConfigurer<HttpSecurity> httpSecuritySessionManagementConfigurer = http.sessionManagement();
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //添加security 无权限访问返回403
         http.exceptionHandling().authenticationEntryPoint(getAuthenticationEntryPoint());
@@ -95,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                .anyRequest().authenticated();
-        http.addFilter(new JWTRequestFilter(authenticationManager(),userDetailsService));
+        http.addFilterAfter(new JWTRequestFilter(userDetailsService),UsernamePasswordAuthenticationFilter.class);
 
 
     }

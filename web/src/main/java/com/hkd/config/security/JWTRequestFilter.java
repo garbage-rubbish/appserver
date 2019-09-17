@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,19 +21,17 @@ import java.io.IOException;
  * Created by huangkd on 2019/1/25.
  * 拦截请求校验token
  */
-public class JWTRequestFilter extends BasicAuthenticationFilter {
+public class JWTRequestFilter extends OncePerRequestFilter {
 
 
     private UserDetailsService userDetailsService;
 
-    public JWTRequestFilter(AuthenticationManager authenticationManager,UserDetailsService userDetailsService) {
-        super(authenticationManager);
+    public JWTRequestFilter(UserDetailsService userDetailsService) {
         this.userDetailsService=userDetailsService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "*");
@@ -63,6 +63,5 @@ public class JWTRequestFilter extends BasicAuthenticationFilter {
             userDetails,userDetails.getPassword(),userDetails.getAuthorities()
         );
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        super.doFilterInternal(request, response, chain);
     }
 }

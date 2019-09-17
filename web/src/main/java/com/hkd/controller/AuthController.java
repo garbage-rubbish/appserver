@@ -6,13 +6,17 @@ import com.hkd.publish.Publisher;
 import com.hkd.result.PlatformResult;
 import com.hkd.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.stream.Stream;
 
 /**
  * Created by huangkd on 2019/1/25.
@@ -25,13 +29,17 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
 
     @Autowired
    private Publisher publisher;
 
     @PostMapping(value = "/login")
     public PlatformResult<String> login(@Validated @RequestBody LoginUser loginUser){
-
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(AuthenticationEntryPoint.class);
+        Stream.of(beanNamesForType).forEach(s -> System.out.println(s));
         log.info("login:{}",loginUser.toString());
         publisher.publish(new LoginEvent(this,loginUser));
         log.info("publish login event");
@@ -48,7 +56,6 @@ public class AuthController {
             }
         });
         System.out.println(request.getInputStream().available());
-//        System.out.println(multipartFile.getSize());
         return "ok";
     }
 

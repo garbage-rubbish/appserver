@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @EnableTransactionManagement
-@MapperScan(basePackages = "cn.com.cybertech.sdly.mapper")
+@MapperScan(basePackages = "com.hkd.mapper")
 @ServletComponentScan
 @EnableAspectJAutoProxy
 public class Application {
