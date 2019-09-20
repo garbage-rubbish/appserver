@@ -44,14 +44,10 @@ public class FileUploader {
             }
         }
         path+=createFilename()+getFileSuffix();
-        OutputStream outputStream=null;
-        try {
-            outputStream=new FileOutputStream(path);
+        try(OutputStream outputStream=new FileOutputStream(path)){
             IOUtils.write(file.getBytes(),outputStream);
         } catch (IOException e) {
             throw new BusinessException(ResultCode.UPLOAD_FILE_FAIL,e.getMessage());
-        }finally {
-            IOUtils.closeQuietly(outputStream);
         }
     }
 
