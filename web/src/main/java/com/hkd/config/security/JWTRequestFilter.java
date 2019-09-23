@@ -3,6 +3,7 @@ package com.hkd.config.security;
 import com.hkd.constants.Constants;
 import com.hkd.utils.JwtTokenUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.NonNullApi;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 /**
@@ -32,11 +34,15 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        //跨域
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Max-Age", "180");
+        //============
+
+
         String token=request.getHeader(Constants.TOKEN_HEADER);
         //token = token.replace("Bearer ","");
         if(StringUtils.isEmpty(token)){
@@ -48,7 +54,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         try{
              username=JwtTokenUtil.getUsernameFromToken(token);
         }catch (RuntimeException e){
-            //将抛出的token解析异常设置到request中 在后面针对处理
+            //将抛出的token解析异常设置到request中 在entryPoint针对处理
             request.setAttribute(Constants.TOKEN_EXCEPTION_HEADER,e);
             chain.doFilter(request,response);
             return ;

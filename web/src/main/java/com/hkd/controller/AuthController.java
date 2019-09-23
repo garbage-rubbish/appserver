@@ -5,6 +5,7 @@ import com.hkd.publish.LoginEvent;
 import com.hkd.publish.Publisher;
 import com.hkd.result.PlatformResult;
 import com.hkd.service.AuthService;
+import com.hkd.test.Item;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.stream.Stream;
 
@@ -59,8 +61,9 @@ public class AuthController {
         return "ok";
     }
 
-    @GetMapping("/test1")
-    public PlatformResult<String> test1(){
+    @PostMapping("/test1")
+    public PlatformResult<String> test1(@RequestBody @Valid Item item){
+        System.out.println(item);
         return PlatformResult.success("sss");
     }
 }

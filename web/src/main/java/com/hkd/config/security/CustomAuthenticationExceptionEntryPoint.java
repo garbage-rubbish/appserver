@@ -24,14 +24,14 @@ public class CustomAuthenticationExceptionEntryPoint implements AuthenticationEn
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
 
-        Object token_exception = httpServletRequest.getAttribute(Constants.TOKEN_EXCEPTION_HEADER);
-        if (token_exception instanceof SignatureException
-                || token_exception instanceof UnsupportedJwtException
-                || token_exception instanceof MalformedJwtException
-                || token_exception instanceof IllegalArgumentException) {
+        Object tokenException = httpServletRequest.getAttribute(Constants.TOKEN_EXCEPTION_HEADER);
+        if (tokenException instanceof SignatureException
+                 || tokenException instanceof UnsupportedJwtException
+                || tokenException instanceof MalformedJwtException
+                || tokenException instanceof IllegalArgumentException) {
             //token 验证异常
             write(httpServletResponse, PlatformResult.failure(ResultCode.PARSE_TOKEN_ERROR));
-        } else if (token_exception instanceof ExpiredJwtException) {
+        } else if (tokenException instanceof ExpiredJwtException) {
             //token 过期异常
             write(httpServletResponse, PlatformResult.failure(ResultCode.TOKEN_EXPIRED));
         } else {
