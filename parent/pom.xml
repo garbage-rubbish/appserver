@@ -37,7 +37,7 @@
         <commons.logging.version>1.2</commons.logging.version>
         <commons.codec.version>1.10</commons.codec.version>
         <commons.beanutils.version>1.9.3</commons.beanutils.version>
-        <commons.collections.version>3.2.1</commons.collections.version>
+        <commons.collections.version>3.2.2</commons.collections.version>
         <commons.math3.version>3.6.1</commons.math3.version>
         <guava.version>27.0.1-jre</guava.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
