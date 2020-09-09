@@ -30,7 +30,7 @@
         <swagger.version>2.9.2</swagger.version>
         <pagehelper.version>1.2.5</pagehelper.version>
         <swgger.version>2.2.2</swgger.version>
-        <hibernate.validator.version>5.3.1.Final</hibernate.validator.version>
+        <hibernate.validator.version>5.3.6.Final</hibernate.validator.version>
         <oracle.driver.version>11.2.0.4</oracle.driver.version>
         <commons.io.version>2.3</commons.io.version>
         <commons.lang3.version>3.7</commons.lang3.version>
