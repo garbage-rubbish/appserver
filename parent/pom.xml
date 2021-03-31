@@ -39,7 +39,7 @@
         <commons.beanutils.version>1.9.3</commons.beanutils.version>
         <commons.collections.version>3.2.1</commons.collections.version>
         <commons.math3.version>3.6.1</commons.math3.version>
-        <guava.version>27.0.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
         <typeconfig.version>1.2.1</typeconfig.version>
         <logback.logstash.version>4.10</logback.logstash.version>
